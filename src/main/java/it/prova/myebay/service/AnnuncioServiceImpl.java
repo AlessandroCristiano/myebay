@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.myebay.model.Annuncio;
 import it.prova.myebay.repository.annuncio.AnnuncioRepository;
@@ -15,39 +16,39 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 	@Autowired
 	private AnnuncioRepository repository;
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Annuncio> listAllElements() {
 		return (List<Annuncio>) repository.findAll();
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Annuncio caricaSingoloElemento(Long id) {
 		return repository.findById(id).orElse(null);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Annuncio caricaSingoloElementoEager(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public void aggiorna(Annuncio annuncioInstance) {
 		repository.save(annuncioInstance);		
 	}
 
-	@Override
+	@Transactional
 	public void inserisciNuovo(Annuncio annuncioInstance) {
 		repository.save(annuncioInstance);		
 	}
 
-	@Override
+	@Transactional
 	public void rimuovi(Long idAnnuncioToDelete) {
 		repository.deleteById(idAnnuncioToDelete);
 		
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Annuncio> findByExample(Annuncio example) {
 		// TODO Auto-generated method stub
 		return null;

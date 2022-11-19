@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.myebay.model.Ruolo;
 import it.prova.myebay.repository.ruolo.RuoloRepository;
@@ -11,46 +12,43 @@ import it.prova.myebay.repository.ruolo.RuoloRepository;
 public class RuoloServiceImpl implements RuoloService{
 	
 	@Autowired
-	private RuoloRepository repository;
+	private RuoloRepository ruoloRepository;
 
-	@Override
-	public List<Ruolo> listAllElements() {
-		return (List<Ruolo>) repository.findAll();
+	@Transactional(readOnly = true)
+	public List<Ruolo> listAll() {
+		return (List<Ruolo>)ruoloRepository.findAll();
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Ruolo caricaSingoloElemento(Long id) {
-		return repository.findById(id).orElse(null);
+		return ruoloRepository.findById(id).orElse(null);
 	}
 
-	@Override
-	public Ruolo caricaSingoloElementoEager(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
+	@Transactional
 	public void aggiorna(Ruolo ruoloInstance) {
-		repository.save(ruoloInstance);
-		
-	}
-
-	@Override
-	public void inserisciNuovo(Ruolo ruoloInstance) {
-		repository.save(ruoloInstance);
-		
-	}
-
-	@Override
-	public void rimuovi(Long idRuoloToDelete) {
-		repository.deleteById(idRuoloToDelete);
-		
-	}
-
-	@Override
-	public List<Ruolo> findByExample(Ruolo example) {
 		// TODO Auto-generated method stub
-		return null;
+
+	}
+
+	@Transactional
+	public void inserisciNuovo(Ruolo ruoloInstance) {
+		ruoloRepository.save(ruoloInstance);
+	}
+
+	@Transactional
+	public void rimuovi(Long idToDelete) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Transactional(readOnly = true)
+	public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) {
+		return ruoloRepository.findByDescrizioneAndCodice(descrizione, codice);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Ruolo> cercaRuoliById(Long[] id) {
+		return ruoloRepository.findListByIds(id);
 	}
 
 }

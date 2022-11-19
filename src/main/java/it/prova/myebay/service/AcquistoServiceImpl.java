@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.myebay.model.Acquisto;
 import it.prova.myebay.repository.acquisto.AcquistoRepository;
@@ -14,41 +15,41 @@ public class AcquistoServiceImpl implements AcquistoService{
 	@Autowired
 	private AcquistoRepository repository;
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Acquisto> listAllElements() {
 		return (List<Acquisto>) repository.findAll();
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Acquisto caricaSingoloElemento(Long id) {
 		return repository.findById(id).orElse(null);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Acquisto caricaSingoloElementoEager(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	@Transactional
 	public void aggiorna(Acquisto acquistoInstance) {
 		repository.save(acquistoInstance);
 		
 	}
 
-	@Override
+	@Transactional
 	public void inserisciNuovo(Acquisto acquistoInstance) {
 		repository.save(acquistoInstance);
 		
 	}
 
-	@Override
+	@Transactional
 	public void rimuovi(Long idAcquistoToDelete) {
 		repository.deleteById(idAcquistoToDelete);
 		
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Acquisto> findByExample(Acquisto example) {
 		// TODO Auto-generated method stub
 		return null;

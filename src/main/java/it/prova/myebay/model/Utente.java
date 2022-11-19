@@ -62,7 +62,17 @@ public class Utente {
 		this.username = username;
 		this.password = password;
 	}
-
+	
+	public Utente(String username, String password, String nome, String cognome, Date dateCreated,
+			Integer creditoResiduo) {
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.creditoResiduo = creditoResiduo;
+	}
+	
 	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
 			Integer creditoResiduo, StatoUtente stato) {
 		super();
@@ -74,6 +84,28 @@ public class Utente {
 		this.dateCreated = dateCreated;
 		this.creditoResiduo = creditoResiduo;
 		this.stato = stato;
+	}
+
+	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
+			StatoUtente stato, Set<Ruolo> ruoli) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.stato = stato;
+		this.ruoli = ruoli;
+	}
+
+	public Utente(String username, String password, String nome, String cognome, Date dateCreated) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
 	}
 
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated,

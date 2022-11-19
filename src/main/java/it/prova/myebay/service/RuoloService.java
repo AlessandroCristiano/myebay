@@ -6,18 +6,18 @@ import it.prova.myebay.model.Ruolo;
 
 public interface RuoloService {
 	
-	public List<Ruolo> listAllElements();
-
-	public Ruolo caricaSingoloElemento(Long id);
+	public List<Ruolo> listAll() ;
 	
-	public Ruolo caricaSingoloElementoEager(Long id);
+	public Ruolo caricaSingoloElemento(Long id) ;
 
-	public void aggiorna(Ruolo ruoloInstance);
+	public void aggiorna(Ruolo ruoloInstance) ;
 
-	public void inserisciNuovo(Ruolo ruoloInstance);
+	public void inserisciNuovo(Ruolo ruoloInstance) ;
 
-	public void rimuovi(Long idRuoloToDelete);
+	public void rimuovi(Long idToDelete) ;
 
-	public List<Ruolo> findByExample(Ruolo example);
+	public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) ;
+	
+	public List<Ruolo> cercaRuoliById(Long[] id);
 
 }

@@ -56,6 +56,33 @@ public class UtenteDTO {
 		this.stato = stato;
 	}
 
+	public UtenteDTO(Long id, String username, String nome, String cognome, Date dateCreated, Long[] ruoliIds) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.ruoliIds = ruoliIds;
+	}
+
+	public UtenteDTO(Long id, @NotBlank(message = "{utente.username.notblank}", groups = { ValidationWithPassword.class,
+			ValidationNoPassword.class }) @Size(min = 3, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri") String username,
+			@NotBlank(message = "{nome.notblank}", groups = { ValidationWithPassword.class,
+					ValidationNoPassword.class }) String nome,
+			@NotBlank(message = "{cognome.notblank}", groups = { ValidationWithPassword.class,
+					ValidationNoPassword.class }) String cognome,
+			Date dateCreated, Integer creditoResiduo, StatoUtente stato) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.creditoResiduo = creditoResiduo;
+		this.stato = stato;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -152,7 +179,7 @@ public class UtenteDTO {
 	// niente password...
 	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel, boolean includeRoles) {
 		UtenteDTO result = new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getNome(),
-				utenteModel.getCognome(), utenteModel.getCreditoResiduo(), utenteModel.getStato());
+				utenteModel.getCognome(), utenteModel.getDateCreated(), utenteModel.getCreditoResiduo(), utenteModel.getStato());
 
 		if (includeRoles && !utenteModel.getRuoli().isEmpty())
 			result.ruoliIds = utenteModel.getRuoli().stream().map(r -> r.getId()).collect(Collectors.toList())
