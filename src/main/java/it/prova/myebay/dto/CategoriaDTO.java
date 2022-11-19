@@ -1,12 +1,14 @@
 package it.prova.myebay.dto;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import it.prova.myebay.model.Annuncio;
 import it.prova.myebay.model.Categoria;
 
 
@@ -82,14 +84,14 @@ public class CategoriaDTO {
 	}
 	
 	public Categoria buildCategoriaModel() {
-		return new Categoria(this.id, this.descrizione, this.codice, this.annunci.buildAnnuncioModel());
+		return new Categoria(this.id, this.descrizione, this.codice, (Set<Annuncio>) this.annunci.buildAnnuncioModel());
 	}
 	
 	public static CategoriaDTO buildCategoriaDTOFromModel(Categoria categoriaModel, boolean includeAnnunci) {
 		CategoriaDTO result = new CategoriaDTO(categoriaModel.getId(), categoriaModel.getDescrizione(), categoriaModel.getCodice());
 
 		if (includeAnnunci)
-			result.setAnnunci(AnnuncioDTO.buildAnnuncioDTOFromModel(categoriaModel.getAnnunci(), false));
+			result.setAnnunci(AnnuncioDTO.buildAnnuncioDTOFromModel((Annuncio) categoriaModel.getAnnunci(), false));
 
 		return result;
 	}
