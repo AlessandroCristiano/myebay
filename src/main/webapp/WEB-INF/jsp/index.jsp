@@ -1,4 +1,8 @@
 <!doctype html>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <html lang="it" class="h-100" >
 	 <head>
 	 
@@ -11,7 +15,7 @@
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   		
-	   		<!-- #####################################  -->
+	   		<!-- ##################################### -->
 	   		<!-- elementi grafici per le features in basso  -->
 	   		<!-- #####################################  -->
 	   		<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -50,10 +54,38 @@
 			    
 			     <div class="p-5 mb-4 bg-light rounded-3">
 				      <div class="container-fluid py-5">
-				        <h1 class="display-5 fw-bold">Benvenuto alla Raccolta Film</h1>
+				        <h1 class="display-5 fw-bold">Benvenuto alla Ricerca Annuncio</h1>
 				        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. </p>
 				        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/regista/search">Vai a Ricerca</a>
 				      </div>
+				      
+				      <form method="post" action="${pageContext.request.contextPath}/articolo/list" class="row g-3">
+						
+							<div class="col-md-6">
+								<label for="nome" class="form-label">Testo</label>
+								<input type="text" name="nome" id="nome" class="form-control" placeholder="Inserire il nome dell'articolo" >
+							</div>
+							
+							<div class="col-md-6">
+								<label for="cognome" class="form-label">Prezzo</label>
+								<input type="number" name="cognome" id="cognome" class="form-control" placeholder="A partire da" >
+							</div>
+							
+							<div class="col-md-6">
+									<label for="categorie" class="form-label">Seleziona categorie:</label><br>
+										<c:forEach items="${categorie_list_attribute }" var="categoriaItem">
+  									<input class="form-check-input" type="checkbox" id="categorie" name="categorie" value="${categoriaItem.id }"> ${categoriaItem.descrizione }<br>
+  										</c:forEach>
+								</div>
+						
+							
+							<div class="col-12">	
+								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
+								<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
+							</div>
+	
+							
+						</form>
 			    </div>
 			    
 			  </div>
