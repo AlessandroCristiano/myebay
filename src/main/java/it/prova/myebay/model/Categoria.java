@@ -31,8 +31,9 @@ public class Categoria {
 		this.codice = codice;
 	}
 
-	public Categoria(String descrizione, String codice, Set<Annuncio> annunci) {
+	public Categoria(Long id, String descrizione, String codice, Set<Annuncio> annunci) {
 		super();
+		this.id=id;
 		this.descrizione = descrizione;
 		this.codice = codice;
 		this.annunci = annunci;

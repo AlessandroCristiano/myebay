@@ -19,8 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
-
-
 @Entity
 @Table(name = "utente")
 public class Utente {
@@ -63,6 +61,19 @@ public class Utente {
 		super();
 		this.username = username;
 		this.password = password;
+	}
+
+	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
+			Integer creditoResiduo, StatoUtente stato) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.creditoResiduo = creditoResiduo;
+		this.stato = stato;
 	}
 
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated,

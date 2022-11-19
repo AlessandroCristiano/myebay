@@ -43,8 +43,9 @@ public class Annuncio {
 		this.aperto = aperto;
 	}
 
-	public Annuncio(String testoAnnuncio, Integer prezzo, Date data, boolean aperto, Utente utenteInserimento) {
+	public Annuncio(Long id, String testoAnnuncio, Integer prezzo, Date data, boolean aperto, Utente utenteInserimento) {
 		super();
+		this.id=id;
 		this.testoAnnuncio = testoAnnuncio;
 		this.prezzo = prezzo;
 		this.data = data;
@@ -52,9 +53,10 @@ public class Annuncio {
 		this.utenteInserimento = utenteInserimento;
 	}
 
-	public Annuncio(String testoAnnuncio, Integer prezzo, Date data, boolean aperto, Utente utenteInserimento,
+	public Annuncio(Long id, String testoAnnuncio, Integer prezzo, Date data, boolean aperto, Utente utenteInserimento,
 			Set<Categoria> categorie) {
 		super();
+		this.id=id;
 		this.testoAnnuncio = testoAnnuncio;
 		this.prezzo = prezzo;
 		this.data = data;

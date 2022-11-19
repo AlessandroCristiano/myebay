@@ -34,7 +34,7 @@ public class Acquisto {
 		this.prezzo = prezzo;
 	}
 
-	public Acquisto(String descrizione, Date data, Integer prezzo, Utente utenteAcquirente) {
+	public Acquisto(Long id, String descrizione, Date data, Integer prezzo, Utente utenteAcquirente) {
 		super();
 		this.descrizione = descrizione;
 		this.data = data;
