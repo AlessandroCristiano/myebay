@@ -29,10 +29,10 @@ public class UtenteDTO {
 
 	private String confermaPassword;
 
-	@NotBlank(message = "{nome.notblank}", groups = { ValidationWithPassword.class, ValidationNoPassword.class })
+	@NotBlank(message = "{utente.nome.notblank}", groups = { ValidationWithPassword.class, ValidationNoPassword.class })
 	private String nome;
 
-	@NotBlank(message = "{cognome.notblank}", groups = { ValidationWithPassword.class, ValidationNoPassword.class })
+	@NotBlank(message = "{utente.cognome.notblank}", groups = { ValidationWithPassword.class, ValidationNoPassword.class })
 	private String cognome;
 
 	private Date dateCreated;

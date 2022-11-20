@@ -27,9 +27,8 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 	}
 
 	@Transactional(readOnly = true)
-	public Annuncio caricaSingoloElementoEager(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Annuncio caricaSingoloElementoEager(Long id) {	
+		return repository.findByIdEager(id);
 	}
 
 	@Transactional
@@ -50,8 +49,12 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 
 	@Transactional(readOnly = true)
 	public List<Annuncio> findByExample(Annuncio example) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findByExample(example);
+	}
+
+	@Override
+	public List<Annuncio> findByExampleEager(Annuncio example) {
+		return repository.findByExampleEager(example);
 	}
 
 }

@@ -56,19 +56,18 @@
 				      <div class="container-fluid py-5">
 				        <h1 class="display-5 fw-bold">Benvenuto alla Ricerca Annuncio</h1>
 				        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. </p>
-				        <a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/regista/search">Vai a Ricerca</a>
-				      </div>
+ 				      </div>
 				      
-				      <form method="post" action="${pageContext.request.contextPath}/articolo/list" class="row g-3">
+				      <form method="post" action="${pageContext.request.contextPath}/annuncio/list" class="row g-3">
 						
 							<div class="col-md-6">
-								<label for="nome" class="form-label">Testo</label>
-								<input type="text" name="nome" id="nome" class="form-control" placeholder="Inserire il nome dell'articolo" >
+								<label for="testoAnnuncio" class="form-label">Testo</label>
+								<input type="text" name="testoAnnuncio" id="testoAnnuncio" class="form-control" placeholder="cerca un annuncio" >
 							</div>
 							
 							<div class="col-md-6">
-								<label for="cognome" class="form-label">Prezzo</label>
-								<input type="number" name="cognome" id="cognome" class="form-control" placeholder="A partire da" >
+								<label for="prezzo" class="form-label">Prezzo</label>
+								<input type="number" name="prezzo" id="prezzo" class="form-control" placeholder="A partire da" >
 							</div>
 							
 							<div class="col-md-6">
