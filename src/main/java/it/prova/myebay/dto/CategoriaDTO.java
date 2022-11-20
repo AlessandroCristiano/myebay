@@ -83,9 +83,9 @@ public class CategoriaDTO {
 		this.annunci = annunci;
 	}
 	
-	public Categoria buildCategoriaModel() {
-		return new Categoria(this.id, this.descrizione, this.codice, (Set<Annuncio>) this.annunci.buildAnnuncioModel());
-	}
+//	public Categoria buildCategoriaModel() {
+//		return new Categoria(this.id, this.descrizione, this.codice, (Set<Annuncio>) this.annunci.buildAnnuncioModel(false));
+//	}
 	
 	public static CategoriaDTO buildCategoriaDTOFromModel(Categoria categoriaModel, boolean includeAnnunci) {
 		CategoriaDTO result = new CategoriaDTO(categoriaModel.getId(), categoriaModel.getDescrizione(), categoriaModel.getCodice());

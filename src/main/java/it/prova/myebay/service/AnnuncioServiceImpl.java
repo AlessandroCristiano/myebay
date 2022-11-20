@@ -1,5 +1,6 @@
 package it.prova.myebay.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 		return repository.findByExample(example);
 	}
 
+	@Transactional(readOnly = true)
 	@Override
 	public List<Annuncio> findByExampleEager(Annuncio example) {
 		return repository.findByExampleEager(example);

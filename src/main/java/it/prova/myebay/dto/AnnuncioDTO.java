@@ -1,5 +1,6 @@
 package it.prova.myebay.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import it.prova.myebay.model.Annuncio;
+import it.prova.myebay.model.Categoria;
 
 public class AnnuncioDTO {
 	
@@ -18,20 +20,16 @@ public class AnnuncioDTO {
 	@Size(min = 4, max = 40, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String testoAnnuncio;
 	
-	@NotBlank(message = "{annuncio.prezzo.notblank}")
+	@NotNull(message = "{annuncio.prezzo.notnull}")
 	private Integer prezzo;
 	
-	@NotBlank(message = "{annuncio.data.notblank}")
 	private Date data;
 	
-	@NotBlank(message = "{annuncio.aperto.notblank}")
 	private boolean aperto;
 	
-	@NotNull(message = "{annuncio.utente.notnull}")
 	private UtenteDTO utente;
 	
-	@NotNull(message = "{annuncio.categorie.notnull}")
-	private CategoriaDTO categorie;
+	private Long[] categorieIds;
 
 	public AnnuncioDTO() {
 		super();
@@ -47,7 +45,7 @@ public class AnnuncioDTO {
 	}
 
 	public AnnuncioDTO(Long id,String testoAnnuncio, Integer prezzo, Date data, boolean aperto,
-			UtenteDTO utente, CategoriaDTO categorie) {
+			UtenteDTO utente, Long[] categorieIds) {
 		super();
 		this.id = id;
 		this.testoAnnuncio = testoAnnuncio;
@@ -55,7 +53,7 @@ public class AnnuncioDTO {
 		this.data = data;
 		this.aperto = aperto;
 		this.utente = utente;
-		this.categorie = categorie;
+		this.categorieIds = categorieIds;
 	}
 
 	public Long getId() {
@@ -98,25 +96,29 @@ public class AnnuncioDTO {
 		this.aperto = aperto;
 	}
 
-	public UtenteDTO getUtenti() {
+	public UtenteDTO getUtente() {
 		return utente;
 	}
 
-	public void setUtenti(UtenteDTO utente) {
+	public void setUtente(UtenteDTO utente) {
 		this.utente = utente;
 	}
 
-	public CategoriaDTO getCategorie() {
-		return categorie;
+	public Long[] getCategorie() {
+		return categorieIds;
 	}
 
-	public void setCategorie(CategoriaDTO categorie) {
-		this.categorie = categorie;
+	public void setCategorie(Long[] categorieIds) {
+		this.categorieIds = categorieIds;
 	}
 	
-	public Annuncio buildAnnuncioModel() {
-		return new Annuncio(this.id, this.testoAnnuncio, this.prezzo, this.data, this.aperto,
-				this.utente.buildUtenteModel(false));
+	public Annuncio buildAnnuncioModel(boolean includeCategorie) {
+		Annuncio result = new Annuncio(this.id, this.testoAnnuncio, this.prezzo, this.data, this.aperto,
+				this.utente.buildUtenteModel(true));
+		if (includeCategorie && categorieIds != null)
+			result.setCategorie(Arrays.asList(categorieIds).stream().map(id -> new Categoria(id)).collect(Collectors.toSet()));
+
+		return result;
 	}
 	
 	public static AnnuncioDTO buildAnnuncioDTOFromModel(Annuncio annuncioModel, boolean includeUtenti) {
@@ -124,7 +126,7 @@ public class AnnuncioDTO {
 				annuncioModel.getData(), annuncioModel.isAperto());
 
 		if (includeUtenti)
-			result.setUtenti(UtenteDTO.buildUtenteDTOFromModel(annuncioModel.getUtenteInserimento(), false));
+			result.setUtente(UtenteDTO.buildUtenteDTOFromModel(annuncioModel.getUtenteInserimento(), false));
 
 		return result;
 	}
