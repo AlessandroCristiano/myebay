@@ -11,6 +11,8 @@ public interface AnnuncioService {
 	public Annuncio caricaSingoloElemento(Long id);
 	
 	public Annuncio caricaSingoloElementoEager(Long id);
+	
+	public Annuncio caricaSingoloElementoConCategorie(Long id);
 
 	public void aggiorna(Annuncio annuncioInstance);
 

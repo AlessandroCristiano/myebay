@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 import it.prova.myebay.model.Annuncio;
 import it.prova.myebay.model.Categoria;
+import it.prova.myebay.model.StatoUtente;
 
 public class AnnuncioDTO {
 	
@@ -110,6 +111,10 @@ public class AnnuncioDTO {
 
 	public void setCategorie(Long[] categorieIds) {
 		this.categorieIds = categorieIds;
+	}
+	
+	public boolean isAperto2() {
+		return this.aperto != false;
 	}
 	
 	public Annuncio buildAnnuncioModel(boolean includeCategorie) {

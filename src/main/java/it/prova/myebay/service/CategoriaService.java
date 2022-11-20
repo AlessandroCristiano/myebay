@@ -19,5 +19,9 @@ public interface CategoriaService {
 	public void rimuovi(Long idCategoriaToDelete);
 
 	public List<Categoria> findByExample(Categoria example);
+	
+	public List<Categoria> cercaCategorieFromId(Long[] ids);
+	
+	
 
 }

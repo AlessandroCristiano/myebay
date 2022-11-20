@@ -107,4 +107,16 @@ public class AnnuncioController {
 			
 		return "annuncio/list";
 	}
+	
+	@GetMapping("/delete/{idAnnuncio}")
+	public String delete(@PathVariable(required = true) Long idAnnuncio, Model model, HttpServletRequest request) {
+		AnnuncioDTO annuncioDTO = AnnuncioDTO.buildAnnuncioDTOFromModel(annuncioService.caricaSingoloElementoConCategorie(idAnnuncio), true);
+		model.addAttribute("delete_annuncio_attr", annuncioDTO);
+		
+
+		model.addAttribute("categorie_annuncio_attr", CategoriaDTO
+				.createCategoriaDTOListFromModelList(categoriaService.cercaCategorieFromId(annuncioDTO.getCategorie()), true));
+		
+		return "annuncio/delete";
+	}
 }

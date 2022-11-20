@@ -54,4 +54,9 @@ public class CategoriaServiceImpl implements CategoriaService{
 		return null;
 	}
 
+	@Override
+	public List<Categoria> cercaCategorieFromId(Long[] id) {
+		return repository.findAllCategorieById(id);
+	}
+
 }
