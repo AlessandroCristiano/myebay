@@ -19,5 +19,7 @@ public interface AcquistoService {
 	public void rimuovi(Long idAcquistoToDelete);
 
 	public List<Acquisto> findByExample(Acquisto example);
+	
+	public List<Acquisto> FindAllAcquistiByIdUtente(Long id);
 
 }

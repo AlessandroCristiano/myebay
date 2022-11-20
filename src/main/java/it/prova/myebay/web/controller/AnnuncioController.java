@@ -58,21 +58,6 @@ public class AnnuncioController {
 	
 	@PostMapping("/list")
 	public String listAnnunci(HttpServletRequest request, Annuncio annuncioExample, ModelMap model) {	
-//		UtenteDTO utente = (UtenteDTO) request.getSession().getAttribute("userInfo");
-//		List<Annuncio> annunci = new ArrayList<>();
-//		
-//		if(utente!=null && utente.getId()!=null) {
-//			annuncioExample.setUtenteInserimento(utente.buildUtenteModel(false));
-//			annunci= annuncioService.findByExampleEager(annuncioExample);
-//		}else{
-//			annunci= annuncioService.findByExample(annuncioExample);
-//		}
-//		
-//		model.addAttribute("annunci_list_attribute",
-//				AnnuncioDTO.createAnnuncioDTOFromModelList(annunci, false));
-//		return "annuncio/list";
-		
-		
 		model.addAttribute("annunci_list_attribute",AnnuncioDTO.
 				createAnnuncioDTOFromModelList(annuncioService.findByExample(annuncioExample), false));
 		return "annuncio/list";
@@ -112,5 +97,14 @@ public class AnnuncioController {
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/home";
+	}
+	
+	@PostMapping("/listAnnunciUtente")
+	public String insertAnnuncio(@RequestParam(name = "utenteId") Long utenteId
+			,Model model) {		
+			model.addAttribute("annunci_list_attribute",
+					AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.FindAllAnnunciById(utenteId), true));
+			
+		return "annuncio/list";
 	}
 }

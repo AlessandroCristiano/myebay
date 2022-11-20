@@ -21,5 +21,7 @@ public interface AnnuncioService {
 	public List<Annuncio> findByExample(Annuncio example);
 	
 	public List<Annuncio> findByExampleEager(Annuncio example);
+	
+	public 	List<Annuncio> FindAllAnnunciById(Long id);
 
 }

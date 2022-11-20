@@ -55,4 +55,9 @@ public class AcquistoServiceImpl implements AcquistoService{
 		return null;
 	}
 
+	@Override
+	public List<Acquisto> FindAllAcquistiByIdUtente(Long id) {
+		return repository.FindAllAcquistiByIdUtente(id);
+	}
+
 }

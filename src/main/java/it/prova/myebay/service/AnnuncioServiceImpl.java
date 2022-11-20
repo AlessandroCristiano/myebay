@@ -59,4 +59,9 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 		return repository.findByExampleEager(example);
 	}
 
+	@Override
+	public List<Annuncio> FindAllAnnunciById(Long id) {
+		return repository.FindAllAnnunciById(id);
+	}
+
 }
