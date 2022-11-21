@@ -123,4 +123,32 @@ public class UtenteController {
 		return "redirect:/utente";
 	}
 
+	
+	@GetMapping("/registrazione")
+	public String registrazione(Model model) {
+		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+		model.addAttribute("insert_utente_attr", new UtenteDTO());
+		return "utente/registrazione";
+	}
+	@PostMapping("/saveRegistrazione")
+	public String saveRegistrazione(
+			@Validated({ ValidationWithPassword.class,
+					ValidationNoPassword.class }) @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
+
+		if (!result.hasFieldErrors("password") && !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
+			result.rejectValue("confermaPassword", "password.diverse");
+
+		if (result.hasErrors()) {
+			return "utente/registrazione";
+		}
+		
+		
+		utenteService.inserisciNuovo(utenteDTO.buildUtenteModel(false));
+
+		redirectAttrs.addFlashAttribute("successMessage", "Attendere che un Admin ti abiliti");
+		return "redirect:/login";
+	}
+	
+	
 }

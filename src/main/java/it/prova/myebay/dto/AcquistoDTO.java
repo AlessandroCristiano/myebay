@@ -29,6 +29,17 @@ public class AcquistoDTO {
 		super();
 	}
 
+	
+	public AcquistoDTO(@NotBlank(message = "{acquisto.descrizione.notblank}") String descrizione,
+			@NotBlank(message = "{acquisto.data.notblank}") Date data,
+			@NotBlank(message = "{acquisto.prezzo.notblank}") Integer prezzo) {
+		super();
+		this.descrizione = descrizione;
+		this.data = data;
+		this.prezzo = prezzo;
+	}
+
+
 	public AcquistoDTO(Long id, @NotBlank(message = "{acquisto.descrizione.notblank}") String descrizione,
 			@NotBlank(message = "{acquisto.data.notblank}") Date data,
 			@NotBlank(message = "{acquisto.prezzo.notblank}") Integer prezzo) {

@@ -51,7 +51,7 @@ public class AnnuncioController {
 	public ModelAndView listAllAnnunci() {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("annunci_list_attribute",
-				AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.listAllElements(), false));
+				AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.listAllElements(), true, true));
 		mv.setViewName("annuncio/list");
 		return mv;
 	}
@@ -59,22 +59,36 @@ public class AnnuncioController {
 	@PostMapping("/list")
 	public String listAnnunci(HttpServletRequest request, Annuncio annuncioExample, ModelMap model) {	
 		model.addAttribute("annunci_list_attribute",AnnuncioDTO.
-				createAnnuncioDTOFromModelList(annuncioService.findByExample(annuncioExample), false));
+				createAnnuncioDTOFromModelList(annuncioService.findByExample(annuncioExample), true, true));
 		return "annuncio/list";
 	}
 	
 	@GetMapping("/show/{idAnnuncio}")
 	public String showAnnuncio(@PathVariable(required = true) Long idAnnuncio, Model model) {
 		Annuncio annuncioModel = annuncioService.caricaSingoloElementoEager(idAnnuncio); //da fare caricamento eager
-		AnnuncioDTO result = AnnuncioDTO.buildAnnuncioDTOFromModel(annuncioModel,true);
+		AnnuncioDTO result = AnnuncioDTO.buildAnnuncioDTOFromModel(annuncioModel,true, true);
 		model.addAttribute("show_annuncio_attr", result);
 		model.addAttribute("utente_annuncio_attr", UtenteDTO.buildUtenteDTOFromModel(utenteService.caricaSingoloUtente(result.getUtente().getId()), false));
 		return "annuncio/show";
 	}
 	
+	@PostMapping("/listAnnunciUtente")
+	public String insertAnnuncio(Model model, HttpServletRequest request) {		
+		UtenteDTO utenteInSessione= (UtenteDTO) request.getSession().getAttribute("userInfo");
+		Long idUtenteInSessione = utenteInSessione.getId();
+			model.addAttribute("annunci_list_attribute",
+					AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.FindAllAnnunciById(idUtenteInSessione), true, true));
+			
+		return "annuncio/listAnnunciUtente";
+	}
+	
+	
+	
+	
+	
 	@GetMapping("/insert")
 	public String create(Model model) {
-		model.addAttribute("categorie_totali_attr", CategoriaDTO.createCategoriaDTOListFromModelList(categoriaService.listAllElements(), false));
+		model.addAttribute("categorie_totali_attr", CategoriaDTO.createCategoriaDTOListFromModelList(categoriaService.listAllElements()));
 		model.addAttribute("insert_annuncio_attr", new AnnuncioDTO());
 		return "annuncio/insert";
 	}
@@ -86,7 +100,7 @@ public class AnnuncioController {
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
 		if (result.hasErrors()) {
-			model.addAttribute("show_annuncio_attr", AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.listAllElements(), false));
+			model.addAttribute("show_annuncio_attr", AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.listAllElements(), true, true));
 			return "annuncio/insert";
 		}
 		
@@ -99,24 +113,60 @@ public class AnnuncioController {
 		return "redirect:/home";
 	}
 	
-	@PostMapping("/listAnnunciUtente")
-	public String insertAnnuncio(@RequestParam(name = "utenteId") Long utenteId
-			,Model model) {		
-			model.addAttribute("annunci_list_attribute",
-					AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.FindAllAnnunciById(utenteId), true));
-			
-		return "annuncio/list";
-	}
+
 	
 	@GetMapping("/delete/{idAnnuncio}")
 	public String delete(@PathVariable(required = true) Long idAnnuncio, Model model, HttpServletRequest request) {
-		AnnuncioDTO annuncioDTO = AnnuncioDTO.buildAnnuncioDTOFromModel(annuncioService.caricaSingoloElementoConCategorie(idAnnuncio), true);
+		AnnuncioDTO annuncioDTO = AnnuncioDTO.buildAnnuncioDTOFromModel(annuncioService.caricaSingoloElementoConCategorie(idAnnuncio), false, true);
 		model.addAttribute("delete_annuncio_attr", annuncioDTO);
 		
 
 		model.addAttribute("categorie_annuncio_attr", CategoriaDTO
-				.createCategoriaDTOListFromModelList(categoriaService.cercaCategorieFromId(annuncioDTO.getCategorie()), true));
+				.createCategoriaDTOListFromModelList(categoriaService.cercaCategorieFromId(annuncioDTO.getCategorieIds())));
 		
 		return "annuncio/delete";
 	}
+	
+	@PostMapping("/remove")
+	public String remove(@RequestParam Long idAnnuncio, RedirectAttributes redirectAttrs) {
+
+		annuncioService.rimuovi(idAnnuncio);
+		
+		redirectAttrs.addFlashAttribute("successMessage", "Eliminazione eseguita correttamente");
+		return "redirect:/home";
+	}
+	
+	@GetMapping("/preUpdate/{idAnnuncio}")
+	public String preUpdate(@PathVariable(required = true) Long idAnnuncio, Model model, HttpServletRequest request) {
+		AnnuncioDTO annuncioDTO = AnnuncioDTO.buildAnnuncioDTOFromModel(annuncioService.caricaSingoloElementoConCategorie(idAnnuncio), true, true);
+		model.addAttribute("edit_annuncio_attr", annuncioDTO);
+		
+
+		model.addAttribute("categorie_totali_attr", CategoriaDTO
+				.createCategoriaDTOListFromModelList(categoriaService.listAllElements()));
+		
+		return "annuncio/update";
+	}
+	
+	@PostMapping("/update")
+	public String update(@Valid @ModelAttribute("edit_annuncio_attr")AnnuncioDTO annuncioDTO,RedirectAttributes redirectAttrs,
+			BindingResult result, Model model, HttpServletRequest request) {
+		
+		if (result.hasErrors()) {
+			model.addAttribute("show_annuncio_attr", AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.listAllElements(), true, true));
+			return "annuncio/insert";
+		}
+		annuncioDTO.setData(new Date());
+		annuncioDTO.setAperto(true);
+		UtenteDTO utenteInSessione = (UtenteDTO) request.getSession().getAttribute("userInfo");
+		Long idUtenteSessione = utenteInSessione.getId();
+		annuncioDTO.setUtente(utenteInSessione);
+		annuncioService.aggiorna(annuncioDTO.buildAnnuncioModel(true));
+		
+		redirectAttrs.addFlashAttribute("successMessage", "" + idUtenteSessione +"");
+		redirectAttrs.addFlashAttribute("utenteId", idUtenteSessione);
+		return "redirect:/home";
+		
+	}
+	
 }

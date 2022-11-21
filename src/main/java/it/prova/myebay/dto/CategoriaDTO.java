@@ -83,22 +83,14 @@ public class CategoriaDTO {
 		this.annunci = annunci;
 	}
 	
-//	public Categoria buildCategoriaModel() {
-//		return new Categoria(this.id, this.descrizione, this.codice, (Set<Annuncio>) this.annunci.buildAnnuncioModel(false));
-//	}
 	
-	public static CategoriaDTO buildCategoriaDTOFromModel(Categoria categoriaModel, boolean includeAnnunci) {
-		CategoriaDTO result = new CategoriaDTO(categoriaModel.getId(), categoriaModel.getDescrizione(), categoriaModel.getCodice());
-
-		if (includeAnnunci)
-			result.setAnnunci(AnnuncioDTO.buildAnnuncioDTOFromModel((Annuncio) categoriaModel.getAnnunci(), false));
-
-		return result;
+	public static CategoriaDTO buildCategoriaDTOFromModel(Categoria categoriaModel) {
+		return new CategoriaDTO(categoriaModel.getId(), categoriaModel.getDescrizione(), categoriaModel.getCodice());
 	}
 	
-	public static List<CategoriaDTO> createCategoriaDTOListFromModelList(List<Categoria> modelListInput, boolean includeAnnunci) {
+	public static List<CategoriaDTO> createCategoriaDTOListFromModelList(List<Categoria> modelListInput) {
 		return modelListInput.stream().map(categoriaEntity -> {
-			return CategoriaDTO.buildCategoriaDTOFromModel(categoriaEntity, includeAnnunci);
+			return CategoriaDTO.buildCategoriaDTOFromModel(categoriaEntity);
 		}).collect(Collectors.toList());
 	}
 

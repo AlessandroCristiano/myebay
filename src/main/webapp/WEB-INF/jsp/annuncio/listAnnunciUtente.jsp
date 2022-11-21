@@ -52,7 +52,10 @@
 										<td>${annuncioItem.prezzo }</td>
 										<td>
 											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/annuncio/show/${annuncioItem.id }">Dettaglio</a>
-											
+											<c:if test="${annuncioItem.aperto='true'}">
+											<a class="btn btn-sm btn-outline-success" href="${pageContext.request.contextPath}/annuncio/preUpdate/${annuncioItem.id }">Edit</a>
+											<a class="btn btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/annuncio/delete/${annuncioItem.id }">Delete</a>
+											</c:if>
 										</td>
 									</tr>
 								</c:forEach>

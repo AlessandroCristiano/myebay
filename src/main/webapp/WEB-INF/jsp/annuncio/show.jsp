@@ -1,6 +1,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -73,9 +74,17 @@
 			    		</dl>
 				    	
 				    	<div class='card-footer'>
-				    	<a href="${pageContext.request.contextPath }/home/" class='btn btn-primary' style='width:90px'>
-			            		<i class='fa fa-chevron-left'></i> Compra
-			        		</a>
+				    	
+				     <sec:authorize access="isAuthenticated()">
+			        <form action="${pageContext.request.contextPath}/acquisto/confermaAcquisto" method="post">
+					    		<input type="hidden" name="idAnnuncio" value="${show_annuncio_attr.id}">
+					    		<input type="hidden" name="utenteId" id="utenteId" value="${userInfo.id}">
+						    	<button type="submit" name="idAnnuncio" id="idAnnuncio" class="btn btn-primary">Conferma Acquisto</button>
+						        
+					</form>
+				</sec:authorize>
+			        		
+			        		
 			     		   	<a href="${pageContext.request.contextPath }/home/" class='btn btn-outline-secondary' style='width:80px'>
 			            		<i class='fa fa-chevron-left'></i> Back
 			        		</a>

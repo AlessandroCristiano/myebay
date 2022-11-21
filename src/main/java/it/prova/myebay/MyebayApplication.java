@@ -40,7 +40,7 @@ public class MyebayApplication implements CommandLineRunner{
 		// anche per password ogni volta ne inserisce uno nuovo, inoltre l'encode della password non lo 
 		//faccio qui perche gia lo fa il service di utente, durante inserisciNuovo
 		if (utenteServiceInstance.findByUsername("admin") == null) {
-			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", new Date());
+			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", new Date(), 500000);
 			admin.getRuoli().add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", "ROLE_ADMIN"));
 			utenteServiceInstance.inserisciNuovo(admin);
 			//l'inserimento avviene come created ma io voglio attivarlo
@@ -48,7 +48,7 @@ public class MyebayApplication implements CommandLineRunner{
 		}
 
 		if (utenteServiceInstance.findByUsername("user") == null) {
-			Utente classicUser = new Utente("user", "user", "Antonio", "Verdi", new Date());
+			Utente classicUser = new Utente("user", "user", "Antonio", "Verdi", new Date(), 500000);
 			classicUser.getRuoli()
 					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", "ROLE_CLASSIC_USER"));
 			utenteServiceInstance.inserisciNuovo(classicUser);

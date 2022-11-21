@@ -20,6 +20,11 @@
 				  ${errorMessage}
 				</div>
 				
+				   	<div class="alert alert-success alert-dismissible fade show ${successMessage==null?'d-none': ''}" role="alert">
+				  ${successMessage}
+				</div>
+				
+				
 				<div class="alert alert-info alert-dismissible fade show ${infoMessage==null?'d-none': ''}" role="alert">
 				  ${infoMessage}
 				</div>
@@ -44,8 +49,12 @@
 			      </label>
 			    </div>
 			    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-			    <p class="mt-5 mb-3 text-muted">&copy; 2017-2021</p>
 			  
+			  	
+			  	<div style="margin-top: 4px">
+                <a class="w-100 btn btn-lg btn-primary" href="${pageContext.request.contextPath}/utente/registrazione">Sign Up</a>
+                <p class="mt-5 mb-3 text-muted">&copy; 2017-2021</p>
+                </div>
 			  
 			  
 			</form>
