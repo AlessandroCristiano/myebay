@@ -61,7 +61,7 @@
 					    <form action="${pageContext.request.contextPath}/annuncio/remove" method="post">
 					    	<input type="hidden" name="idAnnuncio" value="${delete_annuncio_attr.id}">
 					    	<button type="submit" name="submit" id="submit" class="btn btn-danger">Conferma</button>
-					        	<a href="${pageContext.request.contextPath }/annuncio/listAnnunciUtente" class='btn btn-outline-secondary' style='width:80px'>
+					        	<a href="${pageContext.request.contextPath }/home" class='btn btn-outline-secondary' style='width:80px'>
 					        	    <i class='fa fa-chevron-left'></i> Back
 					       		</a>
 					    </form>

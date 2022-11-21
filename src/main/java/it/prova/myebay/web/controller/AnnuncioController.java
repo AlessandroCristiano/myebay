@@ -84,8 +84,6 @@ public class AnnuncioController {
 	
 	
 	
-	
-	
 	@GetMapping("/insert")
 	public String create(Model model) {
 		model.addAttribute("categorie_totali_attr", CategoriaDTO.createCategoriaDTOListFromModelList(categoriaService.listAllElements()));
@@ -96,7 +94,8 @@ public class AnnuncioController {
 	// per la validazione devo usare i groups in quanto nella insert devo validare
 	// la pwd, nella edit no
 	@PostMapping("/save")
-	public String save(@Valid @ModelAttribute("insert_annuncio_attr") AnnuncioDTO annuncioDTO,@RequestParam(name="utenteId") Long utenteId,
+	public String save(@Validated @ModelAttribute("insert_annuncio_attr") AnnuncioDTO annuncioDTO,
+			@RequestParam(name = "utenteId") Long utenteId,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
 		if (result.hasErrors()) {
