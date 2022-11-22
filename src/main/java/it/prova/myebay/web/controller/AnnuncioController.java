@@ -95,15 +95,15 @@ public class AnnuncioController {
 	// la pwd, nella edit no
 	@PostMapping("/save")
 	public String save(@Validated @ModelAttribute("insert_annuncio_attr") AnnuncioDTO annuncioDTO,
-			@RequestParam(name = "utenteId") Long utenteId,
-			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
+			BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirectAttrs) {
 
 		if (result.hasErrors()) {
 			model.addAttribute("show_annuncio_attr", AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.listAllElements(), true, true));
+			model.addAttribute("categorie_totali_attr", CategoriaDTO.createCategoriaDTOListFromModelList(categoriaService.listAllElements()));
 			return "annuncio/insert";
 		}
-		
-		annuncioDTO.setUtente(UtenteDTO.buildUtenteDTOFromModel(utenteService.caricaSingoloUtente(utenteId), true));
+		UtenteDTO utenteInSessione = (UtenteDTO) request.getSession().getAttribute("userInfo");
+		annuncioDTO.setUtente(utenteInSessione);
 		annuncioDTO.setData(new Date());
 		annuncioDTO.setAperto(true);
 		annuncioService.inserisciNuovo(annuncioDTO.buildAnnuncioModel(true));

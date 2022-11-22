@@ -18,7 +18,6 @@ public class AnnuncioDTO {
 	private Long id;
 	
 	@NotBlank(message = "{annuncio.testoAnnuncio.notblank}")
-	@Size(min = 4, max = 40, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String testoAnnuncio;
 	
 	@NotNull(message = "{annuncio.prezzo.notnull}")
