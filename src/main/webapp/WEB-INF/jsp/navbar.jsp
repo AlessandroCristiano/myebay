@@ -1,4 +1,5 @@
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags" %>
 <header>
   <!-- Fixed navbar -->
  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Eighth navbar example">
@@ -58,13 +59,17 @@
 	        <p class="navbar-text">Utente: <sec:authentication property="name"/> (${userInfo.nome } ${userInfo.cognome })
 	    	 <a href="${pageContext.request.contextPath}/logout">Logout</a></p>
 	      </div>
+	       <div class="collapse navbar-collapse" id="navbarsExample07">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 	      <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Utenze</a>
+		     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Impostazioni</a>
 		        <div class="dropdown-menu" aria-labelledby="dropdown01">
-		         <a href="${pageContext.request.contextPath}/logout">Logout</a>
-		          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/insert">Inserisci Utente</a>
+		       	  <a href="${pageContext.request.contextPath}/logout">Logout</a>
+		          <a href="${pageContext.request.contextPath}account/resettaPassword">Reset password</a>
 		        </div>
-		      </li>
+		  </li>
+		</ul>
+		</div>
       </sec:authorize>
       <sec:authorize access="!isAuthenticated()">
 	      <div class="col-md-3 text-end">

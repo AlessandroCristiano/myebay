@@ -50,8 +50,7 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 
 	@Transactional
 	public void rimuovi(Long idAnnuncioToDelete) {
-		repository.deleteById(idAnnuncioToDelete);
-		
+		repository.deleteById(idAnnuncioToDelete);	
 	}
 
 	@Transactional(readOnly = true)
