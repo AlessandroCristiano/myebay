@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,9 @@ public class UtenteServiceImpl implements UtenteService{
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Value("${utente.password.reset.value}")
+	private String valoreReset;
 	
 	@Transactional(readOnly = true)
 	public List<Utente> listAllUtenti() {
@@ -100,5 +104,14 @@ public class UtenteServiceImpl implements UtenteService{
 	@Transactional
 	public void cambiaPassword(UtenteCambiaPasswordDTO utenteNuovo, Utente utente) {
 		utente.setPassword(passwordEncoder.encode(utenteNuovo.getNuovaPassword()));
+	}
+
+	@Override
+	public void cambiaPasswordIn(Long id) {
+		Utente utente = caricaSingoloUtente(id);
+		
+		utente.setPassword(passwordEncoder.encode(valoreReset));
+		repository.save(utente);
+		
 	}
 }

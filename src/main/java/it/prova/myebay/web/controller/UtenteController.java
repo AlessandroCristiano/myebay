@@ -3,6 +3,8 @@ package it.prova.myebay.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -29,6 +31,9 @@ import it.prova.myebay.validation.ValidationWithPassword;
 @Controller
 @RequestMapping(value = "/utente")
 public class UtenteController {
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	private UtenteService utenteService;
@@ -143,12 +148,18 @@ public class UtenteController {
 			return "utente/registrazione";
 		}
 		
-		
 		utenteService.inserisciNuovo(utenteDTO.buildUtenteModel(false));
 
 		redirectAttrs.addFlashAttribute("successMessage", "Attendere che un Admin ti abiliti");
 		return "redirect:/login";
 	}
 	
+	@PostMapping("/resettaAd")
+	public String resettaAd(@RequestParam(name = "idUtentePasswordReset", required = true) Long idUtente, RedirectAttributes redirectAttrs) {
+		
+		utenteService.cambiaPasswordIn(idUtente);
 	
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione effettuata password resettata");
+		return "redirect:/home";
+	}
 }

@@ -30,5 +30,7 @@ public interface UtenteService {
 	public Utente findByUsername(String username);
 	
 	public void cambiaPassword(UtenteCambiaPasswordDTO utenteNuovo, Utente utente);
+	
+	public void cambiaPasswordIn(Long id);
 
 }
