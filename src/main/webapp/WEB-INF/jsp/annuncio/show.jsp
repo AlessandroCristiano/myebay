@@ -117,7 +117,7 @@
 	            </div>
 	            <form method="post" action="${pageContext.request.contextPath}/acquisto/confermaAcquisto" >
 		            <div class="modal-footer">
-		            	<input type="hidden" name="idAnnuncioForAcquisto" id="idAnnuncioForAcquisto">
+		            	<input type="hidden" name="idAnnuncio" value="${show_annuncio_attr.id}">
 		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
 		                <input type="submit" value="Continua"  class="btn btn-primary">
 		            </div>
@@ -132,7 +132,7 @@
 			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
 			var callerId = $(this).attr('id').substring(15);
 			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
-			$('#idAnnuncioForAcquisto').val(callerId);
+			$('#idAnnuncio').val(callerId);
 		});
 	</script>
 	  </body>

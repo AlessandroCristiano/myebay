@@ -53,10 +53,10 @@ public class AcquistoController {
 	}
 	
 	@PostMapping("/confermaAcquisto")
-	public String confermaAcquisto(@RequestParam(name = "utenteId") Long utenteId,@RequestParam(name = "idAnnuncio") Long idAnnuncio,Model model,
-			RedirectAttributes redirectAttrs, HttpServletRequest request) {		
+	public String confermaAcquisto(@RequestParam(name = "idAnnuncio") Long idAnnuncio,Model model,
+			RedirectAttributes redirectAttrs, HttpServletRequest request, Principal principal) {		
 		
-		Utente utente = utenteService.caricaSingoloUtente(utenteId);
+		Utente utente = utenteService.findByUsername(principal.getName());
 		Annuncio annuncio = annuncioService.caricaSingoloElementoEager(idAnnuncio);
 		AcquistoDTO acquistoDTO = new AcquistoDTO(annuncio.getTestoAnnuncio(), annuncio.getData(), annuncio.getPrezzo());
 		
@@ -66,7 +66,7 @@ public class AcquistoController {
 			return "redirect:/home";
 		}
 		
-		if(annuncio.getUtenteInserimento().getId()==utenteId) {
+		if(annuncio.getUtenteInserimento().getId()==utente.getId()) {
 			redirectAttrs.addFlashAttribute("errorMessage", "Non puoi acquistare un tuo annuncio");
 			return "redirect:/home";
 		}
@@ -77,12 +77,12 @@ public class AcquistoController {
 		
 		acquistoDTO.setData(new Date());
 		acquistoDTO.setUtente(UtenteDTO.buildUtenteDTOFromModel
-				(utenteService.caricaSingoloUtente(utenteId), true));
+				(utenteService.caricaSingoloUtente(utente.getId()), true));
 		acquistoService.inserisciNuovo(acquistoDTO.buildAcquistoModel());
 		annuncio.setAperto(false);
 		annuncioService.aggiorna(annuncio);
 		
-		Utente utenteFromDb = utenteService.caricaSingoloUtente(utenteId);
+		Utente utenteFromDb = utenteService.caricaSingoloUtente(utente.getId());
 		UtenteDTO utenteParziale = new UtenteDTO();
 		utenteParziale.setNome(utenteFromDb.getNome());
 		utenteParziale.setCognome(utenteFromDb.getCognome());
