@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "annuncio")
@@ -63,6 +65,15 @@ public class Annuncio {
 		this.aperto = aperto;
 		this.utenteInserimento = utenteInserimento;
 		this.categorie = categorie;
+	}
+
+	public Annuncio(Long id, String testoAnnuncio, Integer prezzo, Date data, boolean aperto) {
+		super();
+		this.id = id;
+		this.testoAnnuncio = testoAnnuncio;
+		this.prezzo = prezzo;
+		this.data = data;
+		this.aperto = aperto;
 	}
 
 	public Long getId() {

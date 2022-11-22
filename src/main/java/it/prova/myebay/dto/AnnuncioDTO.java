@@ -117,8 +117,8 @@ public class AnnuncioDTO {
 	}
 	
 	public Annuncio buildAnnuncioModel(boolean includeCategorie) {
-		Annuncio result = new Annuncio(this.id, this.testoAnnuncio, this.prezzo, this.data, this.aperto,
-				this.utente.buildUtenteModel(true));
+		Annuncio result = new Annuncio(this.id, this.testoAnnuncio, this.prezzo, this.data, this.aperto
+				);
 		if (includeCategorie && categorieIds != null)
 			result.setCategorie(Arrays.asList(categorieIds).stream().map(id -> new Categoria(id)).collect(Collectors.toSet()));
 

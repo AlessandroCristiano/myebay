@@ -16,7 +16,7 @@ public interface AnnuncioService {
 
 	public void aggiorna(Annuncio annuncioInstance);
 
-	public void inserisciNuovo(Annuncio annuncioInstance);
+	public void inserisciNuovo(Annuncio annuncioInstance, String username);
 
 	public void rimuovi(Long idAnnuncioToDelete);
 

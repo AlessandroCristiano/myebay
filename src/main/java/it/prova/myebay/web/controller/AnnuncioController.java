@@ -1,5 +1,6 @@
 package it.prova.myebay.web.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -95,18 +96,15 @@ public class AnnuncioController {
 	// la pwd, nella edit no
 	@PostMapping("/save")
 	public String save(@Validated @ModelAttribute("insert_annuncio_attr") AnnuncioDTO annuncioDTO,
-			BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirectAttrs) {
+			BindingResult result, HttpServletRequest request, Model model, RedirectAttributes redirectAttrs, Principal principal) {
 
 		if (result.hasErrors()) {
 			model.addAttribute("show_annuncio_attr", AnnuncioDTO.createAnnuncioDTOFromModelList(annuncioService.listAllElements(), true, true));
 			model.addAttribute("categorie_totali_attr", CategoriaDTO.createCategoriaDTOListFromModelList(categoriaService.listAllElements()));
 			return "annuncio/insert";
 		}
-		UtenteDTO utenteInSessione = (UtenteDTO) request.getSession().getAttribute("userInfo");
-		annuncioDTO.setUtente(utenteInSessione);
-		annuncioDTO.setData(new Date());
-		annuncioDTO.setAperto(true);
-		annuncioService.inserisciNuovo(annuncioDTO.buildAnnuncioModel(true));
+
+		annuncioService.inserisciNuovo(annuncioDTO.buildAnnuncioModel(true), principal.getName());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/home";

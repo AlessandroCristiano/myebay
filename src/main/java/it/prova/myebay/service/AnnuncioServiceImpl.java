@@ -16,6 +16,9 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 	
 	@Autowired
 	private AnnuncioRepository repository;
+	
+	@Autowired
+	private UtenteService utenteService;
 
 	@Transactional(readOnly = true)
 	public List<Annuncio> listAllElements() {
@@ -38,7 +41,10 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 	}
 
 	@Transactional
-	public void inserisciNuovo(Annuncio annuncioInstance) {
+	public void inserisciNuovo(Annuncio annuncioInstance, String username) {
+		annuncioInstance.setAperto(true);
+		annuncioInstance.setData(new Date());
+		annuncioInstance.setUtenteInserimento(utenteService.findByUsername(username));
 		repository.save(annuncioInstance);		
 	}
 
