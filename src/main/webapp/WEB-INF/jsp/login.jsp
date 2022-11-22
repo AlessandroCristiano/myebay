@@ -9,12 +9,12 @@
 	
 	
 		 <!-- Custom styles for login -->
-	    <link href="assets/css/signin.css" rel="stylesheet">
+	    <link href="${pageContext.request.contextPath}/assets/css/signin.css" rel="stylesheet">
 	</head>
 	
 	<body class="text-center">
 		<main class="form-signin">
-			<form class="form-signin" name='login' action="login" method='POST' novalidate="novalidate">
+			<form class="form-signin" name='login' action="${pageContext.request.contextPath}/login" method='POST' novalidate="novalidate">
 		   	
 			   	<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none': ''}" role="alert">
 				  ${errorMessage}
@@ -30,7 +30,7 @@
 				</div>
 				
 				
-			  	<img class="mb-4" src="./assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+			  	<img class="mb-4" src="${pageContext.request.contextPath}/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
 				<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 		    	
 		    	
@@ -50,7 +50,7 @@
 			    </div>
 			    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 			  
-			  	
+			  	<input type="hidden" name="idAnnuncioWithNoAuth" value="${idAnnuncioWithNoAuth }">
 			  	<div style="margin-top: 4px">
                 <a class="w-100 btn btn-lg btn-primary" href="${pageContext.request.contextPath}/utente/registrazione">Sign Up</a>
                 <p class="mt-5 mb-3 text-muted">&copy; 2017-2021</p>

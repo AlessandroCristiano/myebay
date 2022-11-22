@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +36,15 @@ public class CustomAuthenticationSuccessHandlerImpl implements AuthenticationSuc
 		utenteParziale.setCognome(utenteFromDb.getCognome());
 		utenteParziale.setId(utenteFromDb.getId());
 		request.getSession().setAttribute("userInfo", utenteParziale);
+		
+		String idAnnuncioWithNoAuthParam = request.getParameter("idAnnuncioWithNoAuth");
+		System.out.println("maledetto2   "+idAnnuncioWithNoAuthParam);
+		if(StringUtils.isNotBlank(idAnnuncioWithNoAuthParam) && NumberUtils.isCreatable(idAnnuncioWithNoAuthParam)) {
+			Long idAnnuncioWithNoAuth = Long.parseLong(idAnnuncioWithNoAuthParam);
+			response.sendRedirect("/annuncio/show/"+idAnnuncioWithNoAuth);
+			return;
+		}
+		
 		response.sendRedirect("home");
 
 	}

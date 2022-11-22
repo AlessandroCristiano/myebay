@@ -75,14 +75,15 @@
 				    	
 				    	<div class='card-footer'>
 				    	
-				     <sec:authorize access="isAuthenticated()">
-			        <form action="${pageContext.request.contextPath}/acquisto/confermaAcquisto" method="post">
-					    		<input type="hidden" name="idAnnuncio" value="${show_annuncio_attr.id}">
-					    		<input type="hidden" name="utenteId" id="utenteId" value="${userInfo.id}">
-						    	<button type="submit" name="idAnnuncio" id="idAnnuncio" class="btn btn-primary">Conferma Acquisto</button>
-						        
-					</form>
-				</sec:authorize>
+				      <c:if test="${show_annuncio_attr.aperto }">
+						        <sec:authorize access="isAuthenticated()">
+						        	<a id="acquistoLink_#_${show_annuncio_attr.id }" class="btn btn-success link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >Acquista</a>
+							    </sec:authorize>
+							    
+							    <sec:authorize access="!isAuthenticated()">
+							   		<a class="btn btn-success" href="${pageContext.request.contextPath}/acquisto/acquistaWithoutAuth?idAnnuncioWithNoAuth=${show_annuncio_attr.id }">Acquista</a> 
+							    </sec:authorize>
+						    </c:if>
 			        		
 			        		
 			     		   	<a href="${pageContext.request.contextPath }/home/" class='btn btn-outline-secondary' style='width:80px'>
@@ -102,5 +103,37 @@
 			
 			<!-- Footer -->
 			<jsp:include page="../footer.jsp" />
+			<!-- Modal -->
+	<div class="modal fade" id="confirmOperationModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
+	    aria-hidden="true">
+	    <div class="modal-dialog" >
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h5 class="modal-title" id="confirmOperationModalLabel">Conferma Operazione</h5>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                Continuare con l'operazione?
+	            </div>
+	            <form method="post" action="${pageContext.request.contextPath}/acquisto/confermaAcquisto" >
+		            <div class="modal-footer">
+		            	<input type="hidden" name="idAnnuncioForAcquisto" id="idAnnuncioForAcquisto">
+		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+		                <input type="submit" value="Continua"  class="btn btn-primary">
+		            </div>
+	            </form>
+	        </div>
+	    </div>
+	</div>
+	<!-- end Modal -->
+	<script type="text/javascript">
+		<!-- aggancio evento click al conferma del modal  -->
+		$(".link-for-modal").click(function(){
+			<!-- mi prendo il numero che poi sarà l'id. Il 18 è perché 'changeStatoLink_#_' è appunto lungo 18  -->
+			var callerId = $(this).attr('id').substring(15);
+			<!-- imposto nell'hidden del modal l'id da postare alla servlet -->
+			$('#idAnnuncioForAcquisto').val(callerId);
+		});
+	</script>
 	  </body>
 </html>
